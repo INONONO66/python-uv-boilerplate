@@ -70,20 +70,3 @@ lock: ## Generate uv.lock file
 
 tree: ## Show project dependency tree
 	uv tree
-
-check: ## Check project configuration
-	uv run --group lint ruff check .
-	uv run --group type-check pyright
-	uv run --group test pytest --collect-only
-
-bump-patch: ## Bump patch version
-	uv run --group lint cz bump --increment PATCH
-
-bump-minor: ## Bump minor version
-	uv run --group lint cz bump --increment MINOR
-
-bump-major: ## Bump major version
-	uv run --group lint cz bump --increment MAJOR
-
-changelog: ## Generate changelog
-	uv run --group lint cz changelog

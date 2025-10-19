@@ -234,9 +234,9 @@ wheels/
 # Virtual environments
 .venv
 
-# UV
-uv.lock
+# IDE specific
+.cursor/
+.claude/
 
-.cursor
-.claude
-.benchmarks
+# Benchmarks
+.benchmarks/
