@@ -1,0 +1,128 @@
+[project]
+name = "python-uv-boilerplate"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.uv.workspace]
+members = [
+    "packages/*",
+    "apps/*"
+]
+
+[tool.uv.sources]
+core = { workspace = true }
+
+[dependency-groups]
+dev = [
+  {include-group = "lint"},
+  {include-group = "test"},
+  {include-group = "type-check"},
+]
+lint = [
+  "ruff",
+  "pre-commit",
+  "commitizen",
+]
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+    "pytest-watcher",
+    "pytest-asyncio",
+    "pytest-socket",
+    "pytest-xdist",
+    "pytest-benchmark",
+    "pytest-codspeed",
+    "pytest-profiling",
+]
+type-check = [
+  "pyright",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+exclude = [
+    ".git",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "SIM", # flake8-simplify
+]
+ignore = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["core", "logger"]
+
+[tool.pytest.ini_options]
+testpaths = ["packages/*/tests/unit_tests", "packages/*/tests/integration_tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--strict-markers",
+]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "benchmark: Benchmark tests",
+]
+
+[tool.coverage.run]
+source = ["packages"]
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+    "*/.venv/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+
+[tool.pyright]
+include = ["packages", "apps"]
+exclude = [
+    "**/__pycache__",
+    "**/node_modules",
+    ".venv",
+    "build",
+    "dist",
+]
+pythonVersion = "3.10"
+typeCheckingMode = "basic"
+reportMissingImports = true
+reportMissingTypeStubs = false
+reportUnusedImport = true
+reportUnusedVariable = true
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+tag_format = "v$version"
+version_files = [
+    "pyproject.toml:version"
+]
